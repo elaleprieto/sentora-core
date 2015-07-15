@@ -135,7 +135,7 @@ class module_controller extends ctrl_module
         return $res;
     }
 
-    static function ExecuteResetPassword($ft_id_pk, $password)
+    static function ExecuteResetPassword($ftpUserId, $password)
     {
         global $zdbh;
         global $controller;
@@ -146,9 +146,10 @@ class module_controller extends ctrl_module
         $rowftpfind->execute();
         $rowftp = $rowftpfind->fetch();
 
-        $sql = $zdbh->prepare("UPDATE x_ftpaccounts SET ft_password_vc=:password WHERE ft_id_pk=:ftpid");
+        $sql = $zdbh->prepare("UPDATE x_ftpaccounts SET ft_password_vc=:password WHERE ft_id_pk=:ftpUserId and ft_id_fk:userid");
         $sql->bindParam(':password', $password);
-        $sql->bindParam(':ftpid', $ft_id_pk);
+        $sql->bindParam(':ftpUserId', $ft_id_pk);
+        $sql->bindParam(':userId', $currentUser["id"]);
         $sql->execute();
 
         self::$reset = true;
@@ -166,10 +167,10 @@ class module_controller extends ctrl_module
     {
         global $zdbh;
         global $controller;
-        $currentuser = ctrl_users::GetUserDetail($uid);
-	$username = $currentuser['username'] . '_' . $username;
+        $currentUser = ctrl_users::GetUserDetail($uid);
+        $ftpUserName = $currentUser['username'] . '_' . $username;
         runtime_hook::Execute('OnBeforeCreateFTPAccount');
-        if (fs_director::CheckForEmptyValue(self::CheckForErrors($username, $password))) {
+        if (!self::CheckForErrors($ftpUserName, $password, 0, $currentUser["id"], false)) {
             // Check to see if its a new home directory or use a current one...
             if ($home == 1) {
                 $homedirectory_to_use = '/' . str_replace('.', '_', $username);
@@ -204,32 +205,52 @@ class module_controller extends ctrl_module
         return false;
     }
 
-    static function CheckForErrors($username, $password)
+    //Check if the data is valid from input
+    static function CheckForErrors($ftpUserName, $password, $ftpUserId, $currentUserId, $isEdit)
     {
-        global $zdbh;
-        $retval = FALSE;
-        // Check to make sure the username and password is not blank before we go any further...
-        if ($username == '' || $password == '') {
-            self::$blank = TRUE;
-            $retval = TRUE;
+        global $zdbh;        
+        // Check to make sure the username and password is not blank before we go any further...        
+        if(!self::IsVaildUserandPass){        
+            self::$blank = true;
+            return true;
         }
         // Check for invalid username
-        if (!self::IsValidUserName($username)) {
+        if (!self::IsValidUserName($ftpUserName)) {
             self::$badname = true;
-            $retval = TRUE;
+            return true;
         }
         // Check to make sure the cron is not a duplicate...
-        $sql = "SELECT COUNT(*) FROM x_ftpaccounts WHERE ft_user_vc=:userid AND ft_deleted_ts IS NULL";
-        $numrows = $zdbh->prepare($sql);
-        $numrows->bindParam(':userid', $username);
-
-        if ($numrows->execute()) {
-            if ($numrows->fetchColumn() <> 0) {
-                self::$alreadyexists = TRUE;
-                $retval = TRUE;
-            }
+        
+        if(self::IsDuplicateUserName($ftpUserName)){
+            self::$alreadyexists = true;
+            return true;
         }
-        return $retval;
+        
+        if($isEdit && CheckForEmptyValue($ftpUserId) && self::IsUserEditable($))        
+            
+        
+        return false;
+    }
+    
+    static function IsValidUserandPass($userName, $password){
+        if(fs_director::CheckForEmptyValue($userName) || fs_director::CheckForEmptyValue($password)){
+            return false;
+        }
+        return true;
+    }
+    
+    static function IsDuplicateUserName($userName)
+    {
+        $sql = "SELECT COUNT(*) FROM x_ftpaccounts WHERE ft_user_vc=:userName AND ft_deleted_ts IS NULL";
+        $numrows = $zdbh->prepare($sql);
+        $numrows->bindParam(':userName', $userName);
+
+        if ($numrows->execute())
+         {
+            if ($numrows->fetch() <> 0) 
+            {
+            }            
+        }
     }
 
     static function IsValidUserName($username)
@@ -242,12 +263,7 @@ class module_controller extends ctrl_module
         global $zdbh;
         global $controller;
         runtime_hook::Execute('OnBeforeDeleteFTPAccount');
-        $rowftpsql = "SELECT * FROM x_ftpaccounts WHERE ft_id_pk=:ftIdPk";
-        $rowftpfind = $zdbh->prepare($rowftpsql);
-        $rowftpfind->bindParam(':ftIdPk', $ft_id_pk);
-        $rowftpfind->execute();
-        $rowftp = $rowftpfind->fetch();
-
+      
         $sql = $zdbh->prepare("UPDATE x_ftpaccounts SET ft_deleted_ts=:time WHERE ft_id_pk=:ftpid");
         $sql->bindParam(':ftpid', $ft_id_pk);
         $sql->bindParam(':time', $ft_id_pk);
