@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Usage Viewer",
+		"version"			: "100",
+		"category"			: "Account Information",
+		"description"		: "The account usage screen enables you to see exactly what you are currently using on your hosting package.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Services",
+		"version"			: "100",
+		"category"			: "Advanced",
+		"description"		: "Here you can check the current status of our services and see what services are up and running and which are down and not.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Protected Directories",
+		"version"			: "300",
+		"category"			: "Advanced",
+		"description"		: "Password protect your web applications and directories.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

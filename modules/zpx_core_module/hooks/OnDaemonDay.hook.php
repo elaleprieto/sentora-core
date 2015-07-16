@@ -6,18 +6,17 @@ $modsql->execute();
 echo fs_filehandler::NewLine() . "START checking for any avaliable module updates.." . fs_filehandler::NewLine();
 while ($modules = $modsql->fetch()) {
     echo "Checking update for mod: " . $modules['mo_name_vc'] . fs_filehandler::NewLine();
-    $mod_config = new xml_reader(fs_filehandler::ReadFileContents(ctrl_options::GetSystemOption('sentora_root') . 'modules/' . $modules['mo_folder_vc'] . '/module.xml'));
-    $mod_config->Parse();
-    if (isset($mod_config->document->version[0]->tagData)) {
-        $current_version = $mod_config->document->version[0]->tagData;
-        $updateurl = $mod_config->document->updateurl[0]->tagData;
+    $mod_config = new json_decode(file_get_contents(fs_filehandler::ReadFileContents(ctrl_options::GetSystemOption('sentora_root') . 'modules/' . $modules['mo_folder_vc'] . '/settings.json')));    
+    if (isset($mod_config->version)) {
+        $current_version = $mod_config->version;
+        $updateurl = $mod_config->updateurl;
         $getupdateinfo = fs_filehandler::ReadFileContents($updateurl);
         if (strstr(strtoupper($getupdateinfo), 'LATESTVERSION')) {
             $updateinfo = new xml_reader($getupdateinfo);
             $updateinfo->Parse();
-            if (isset($updateinfo->document->latestversion[0]->tagData)) {
-                $latest_version = $updateinfo->document->latestversion[0]->tagData;
-                $downloadurl = $updateinfo->document->downloadurl[0]->tagData;
+            if (isset($updateinfo->latestversion)) {
+                $latest_version = $updateinfo->latestversion;
+                $downloadurl = $updateinfo->downloadurl;
                 if ($current_version < $latest_version) {
                     $versionsql = $zdbh->prepare("UPDATE x_modules SET mo_updatever_vc = :latest_version, mo_updateurl_tx = :downloadurl WHERE mo_id_pk = :mo_id_pk");
                     $versionsql->bindParam(':mo_id_pk', $modules['mo_id_pk']);
@@ -36,7 +35,7 @@ while ($modules = $modsql->fetch()) {
             echo "The remote file does not exist." . fs_filehandler::NewLine();
         }
     } else {
-        echo "Couldn't open the module XML file for (" . $modules['mo_name_vc'] . ")" . fs_filehandler::NewLine();
+        echo "Couldn't open the module settings json file for (" . $modules['mo_name_vc'] . ")" . fs_filehandler::NewLine();
     }
 }
 echo "END getting module version update information!" . fs_filehandler::NewLine();

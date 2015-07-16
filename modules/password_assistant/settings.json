@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Change Password",
+		"version"			: "100",
+		"category"			: "Account Information",
+		"description"		: "Change your current control panel password.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

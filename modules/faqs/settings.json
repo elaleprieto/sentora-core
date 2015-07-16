@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "FAQ's",
+		"version"			: "100",
+		"category"			: "Advanced",
+		"description"		: "Please find a list of the most common questions from users, if you are unable to find a solution to your problem below please then contact your hosting provider. Simply click on the FAQ below to view the solution.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

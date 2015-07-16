@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Forwards",
+		"version"			: "100",
+		"category"			: "Mail",
+		"description"		: "Using this module you have the ability to create mail forwarders.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

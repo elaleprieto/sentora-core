@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Maanage Groups",
+		"version"			: "100",
+		"category"			: "Reseller",
+		"description"		: "Manage user groups to enable greater module permissions.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

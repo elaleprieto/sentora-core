@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "MySQL Databases",
+		"version"			: "100",
+		"category"			: "Databases",
+		"description"		: "MySQL databases are used by many PHP applications such as forums and ecommerce systems, below you can manage and create MySQL databases.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "FTP Admin",
+		"version"			: "100",
+		"category"			: "Admin",
+		"description"		: "This module enables you to configure FTP settings for your hosting accounts.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

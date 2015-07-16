@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Package Manager",
+		"version"			: "110",
+		"category"			: "Reseller",
+		"description"		: "Welcome to the Package Manager, using this module enables you to create and manage existing reseller packages on your Sentora hosting account.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

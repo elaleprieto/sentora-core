@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "My Account",
+		"version"			: "100",
+		"category"			: "Account Information",
+		"description"		: "Your current personal account details, we ask that you keep these details up-to-date in case we need to contact you regarding your hosting services.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

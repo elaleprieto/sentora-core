@@ -71,20 +71,20 @@ class ui_module {
         global $zdbh;
         global $zlo;
         runtime_hook::Execute('OnBeforeModuleInfoToDB');
-        $mod_xml = "modules/$module/module.xml";
+        $mod_json = "modules/$module/settings.json";
         try {
-            $mod_config = new xml_reader(fs_filehandler::ReadFileContents($mod_xml));
-            $mod_config->Parse();
-            $module_name = $mod_config->document->name[0]->tagData;
-            $module_version = $mod_config->document->version[0]->tagData;
-            $module_description = $mod_config->document->desc[0]->tagData;
-            $module_defaultcat = $mod_config->document->defaultcat[0]->tagData;
-            $module_type = $mod_config->document->type[0]->tagData;
+            
+            $mod_config = json_decode(file_get_contents($mod_json));
+            $module_name = $mod_config->name;
+            $module_version = $mod_config->version;
+            $module_description = $mod_config->description;
+            $module_category = $mod_config->category;
+            $module_type = $mod_config->type;
             if ($module_type != ("user" || "system" || "modadmin")) {
                 $module_type = "user";
             }
             $sql = $zdbh->prepare("SELECT mc_id_pk FROM x_modcats WHERE mc_name_vc = :module_defaultcat");
-            $sql->bindParam(':module_defaultcat', $module_defaultcat);
+            $sql->bindParam(':module_defaultcat', $module_category);
             $status = $sql->execute();
             $result = $sql->fetch();
 
@@ -95,7 +95,7 @@ class ui_module {
             }
             $sql = $zdbh->prepare("INSERT INTO x_modules (mo_name_vc, mo_category_fk, mo_version_in, mo_folder_vc, mo_installed_ts, mo_type_en, mo_desc_tx) VALUES (:module_name, :cat_fk, :module_version, :module, " . time() . ", :module_type,  :module_description)");
             $sql->bindParam(':module_name', $module_name);
-            $sql->bindParam(':cat_fk', $cat_fk);
+            $sql->bindParam(':cat_fk', $category_id);
             $sql->bindParam(':module_version', $module_version);
             $sql->bindParam(':module', $module);
             $sql->bindParam(':module_type', $module_type);
@@ -295,31 +295,37 @@ class ui_module {
     }
 
     /**
-     * Returns an array of the XML tags from the module.xml file.
-     * @author Bobby Allen (ballen@bobbyallen.me)
+     * Returns an returns object from modules settings.json file.
+     * @author Elijah Bate (ebate@omegasoftware.com.au)
      * @global obj $zlo The Generic ZPX logging object.
-     * @param string $modulefolder The module folder name of which to import the XML data from.
-     * @return mixed Will an array of the module XML data if the parsing of the document is successful otherwise will return 'false'.
+     * @param string $moduleName The module folder name of which to import the XML data from.
+     * @return the object unless it fails validation then false
      */
-    static function GetModuleXMLTags($modulefolder) {
+    static function LoadModuleConfig($moduleName)
+    {
         global $zlo;
-        $mod_xml = "modules/$modulefolder/module.xml";
-        $info = array();
-        try {
-            $mod_config = new xml_reader(fs_filehandler::ReadFileContents($mod_xml));
-            $mod_config->Parse();
-            $info['name'] = $mod_config->document->name[0]->tagData;
-            $info['version'] = $mod_config->document->version[0]->tagData;
-            $info['desc'] = $mod_config->document->desc[0]->tagData;
-            $info['authorname'] = $mod_config->document->authorname[0]->tagData;
-            $info['authoremail'] = $mod_config->document->authoremail[0]->tagData;
-            $info['authorurl'] = $mod_config->document->authorurl[0]->tagData;
-            $info['updateurl'] = $mod_config->document->updateurl[0]->tagData;
-            return $info;
-        } catch (Exception $e) {
+        $configFilePath = ctrl_options::GetSystemOption('sentora_root') . "modules/$moduleName/settings.json";        
+        try
+        {
+            $configFile = file_get_contents($configFilePath);
+            $config = json_decode($configFile);
+            if(isset($config->name) && isset($config->description) && 
+               isset($config->authorname) && isset($config->authoremail) && 
+               isset($config->updateurl) && isset($config->type) && 
+               isset($config->category) && isset($config->version))
+            {
+                 return $config;
+            }           
+            
             return false;
         }
-    }
+        catch(Exception $ex)
+        {
+            //$zlo error on read
+            return false;
+        }       
+    }  
+    
 
 }
 

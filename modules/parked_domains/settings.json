@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Parked Domains",
+		"version"			: "100",
+		"category"			: "Domain Management",
+		"description"		: "Domain parking refers to the registration of an Internet domain name without that domain being used to provide services such as e-mail or a website. If you have any domains that you are not using, then simply park them!",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

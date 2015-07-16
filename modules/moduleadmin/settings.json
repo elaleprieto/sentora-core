@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Module Administration",
+		"version"			: "100",
+		"category"			: "Server Admin",
+		"description"		: "Configure module specific settings here.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Sub Domains",
+		"version"			: "100",
+		"category"			: "Domain Management",
+		"description"		: "This module enables you to add or configure domain web hosting on your account.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

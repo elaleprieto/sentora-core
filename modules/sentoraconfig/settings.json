@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Sentora Config",
+		"version"			: "100",
+		"category"			: "Server Admin",
+		"description"		: "Changes made here affect the entire Sentora configuration, please double check everything before saving changes.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

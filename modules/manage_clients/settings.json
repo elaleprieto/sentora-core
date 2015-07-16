@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Manage Clients",
+		"version"			: "100",
+		"category"			: "Reseller",
+		"description"		: "The account manager enables you to view, update and create client accounts.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

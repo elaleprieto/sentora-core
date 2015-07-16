@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Backup",
+		"version"			: "100",
+		"category"			: "Advanced",
+		"description"		: "The backup manager module enables you to backup your entire hosting account including all your MySQL® databases.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

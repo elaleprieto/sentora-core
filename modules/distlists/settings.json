@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Distribution Lists",
+		"version"			: "100",
+		"category"			: "Mail",
+		"description"		: "This module enables you to create and manage email distribution groups.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

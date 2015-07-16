@@ -1,0 +1,13 @@
+{	
+	"module"	:	{
+		"name"				: "PHP Info",
+		"version"			: "100",
+		"category"			: "Server Admin",
+		"description"		: "PHPInfo provides you with information regarding the version of PHP running on this system as well as installed PHP extensions and configuration details.
+    ",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

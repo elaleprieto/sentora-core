@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Aliases",
+		"version"			: "100",
+		"category"			: "Mail",
+		"description"		: "Using this module you have the ability to create alias mailboxes to existing accounts.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

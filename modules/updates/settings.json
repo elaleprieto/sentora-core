@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Updates",
+		"version"			: "100",
+		"category"			: "Server Admin",
+		"description"		: "Check to see if there are any available updates to your version of the Sentora software.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

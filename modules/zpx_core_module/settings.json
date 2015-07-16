@@ -1,0 +1,13 @@
+{	
+	"module"	:	
+	{
+		"name"			: 	"Sentora Core System Module",
+		"version"		: 	"100",
+		"category"		: 	"other",
+		"description"	: 	"Core system modules for Sentora.",
+		"authorname"	: 	"Sentora Project",
+		"authoremail"	: 	"info@sentora.org",
+		"authorurl"		: 	"http://sentora.org/",
+		"updateurl"		: 	"https://store.sentora.org/version.json"
+	}		
+}

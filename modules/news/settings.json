@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Sentora News",
+		"version"			: "100",
+		"category"			: "Server Admin",
+		"description"		: "Find out all the latest news and infomation from the Sentora project.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

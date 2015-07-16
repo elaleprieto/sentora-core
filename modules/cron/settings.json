@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "Cron Manager",
+		"version"			: "100",
+		"category"			: "Advanced",
+		"description"		: "Here you can configure PHP scripts to run automatically at different time intervals.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

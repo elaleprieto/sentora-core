@@ -1,69 +1,86 @@
 <div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
     <div class="panel-heading">
         <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>">
-
         <div class="zmodule_title">
             <@ ModuleName @>
         </div>
     </div>
 
     <@ Result @>
-
-
-
-    <% if IsShowModuleInfo %>
-    <div class="zgrid_wrapper">
-        <h2><: Module Information :></h2>
-        <table class="table table-striped">
-            <tr>
-                <th><: Module name :></th>
-                <td><@ ModuleInfoName @></td>
-            </tr>
-            <tr>
-                <th><: Module description :></th>
-                <td><@ ModuleDescription @></td>
-            </tr>
-            <tr>
-                <th><: Module developer :></th>
-                <td><% if ModuleDeveloperURL %><a href="<@ ModuleDeveloperURL @>"><% endif %><@ ModuleDeveloperName @><% if ModuleDeveloperURL %></a><% endif %> <% if ModuleDeveloperEmail %>(<@ ModuleDeveloperEmail @>)<% endif %></td>
-            </tr>
-            <tr>
-                <th><: Module version :></th>
-                <td><@ ModuleVersion @></td>
-            </tr>
-            <tr>
-                <th><: Latest Version :></th>
-                <td><% if LatestVersion %><a href="<@ ModuleUpdateURL @>"><@ LatestVersion @></a><% else %>Already up to date!<% endif %></td>
-            </tr>
-            <tr>
-                <th><: Module Type :></th>
-                <td><@ ModuleType @></td>
-            </tr>
-        </table>
-        <br>
-        <p><a href="./?module=moduleadmin">Return to Module Admin</a></p>
-    </div>
-    <% else %>
-    <div class="zgrid_wrapper">
-        <@ AdminModules @>
-    </div>
-    <div class="zgrid_wrapper">
-        <@ ConfigModules @>
-    </div>
-
-    <div class="zform_wrapper">
-        <h2><: Install a new module :></h2>
-        <p><: You can automatically install a new module by uploading your sentora package archive (.zpp file) and then click 'Install' to begin the process. :></p>
-        <form action="./?module=moduleadmin&action=InstallModule" method="post" enctype="multipart/form-data">
+    
+    <% if ShowModuleInfo %>
+        <div class="zgrid_wrapper">
+            <h2><: Module Information :></h2>
             <table class="table table-striped">
                 <tr>
-                    <th>Module Archive:</th>
-                    <td> <input type="file" name="modulefile" id="modulefile" /></td>
-                    <td><button class="button-loader btn btn-primary" type="submit" name="submit"><: Install! :></button></td>
+                    <th><: Name :></th>
+                    <td><@ ShowModuleInfo["Name"] @></td>
+                </tr>
+                <tr>
+                    <th><: Description :></th>
+                    <td><@ ShowModuleInfo["Description"] @></td>
+                </tr>
+                <tr>
+                    <th><: Developer :></th>
+                    <td>
+                        <% if ShowModuleInfo["DeveloperURL"] != "" %>
+                            <a href="<@ ShowModuleInfo["DeveloperURL"] @>"><@ ShowModuleInfo["DeveloperName"] @></a>                
+                        <% endif %> 
+                        <% if ShowModuleInfo["DeveloperEmail"] != "" %>
+                            (<@ ShowModuleInfo["DeveloperEmail"] @>)
+                        <% endif %>
+                    </td>
+                </tr>
+                <tr>
+                    <th><: Current Version :></th>
+                    <td><@ ShowModuleInfo["CurrentVersion"] @></td>
+                </tr>
+                <tr>
+                    <th><: Latest Version :></th>
+                    <td>
+                        <% if ShowModuleInfo["LatestVersion"] != "" %>
+                            <a href="<@ ShowModuleInfo["UpdateURL"] @>"><@ ShowModuleInfo["LatestVersion"] @></a>
+                        <% else %>
+                            Already up to date!
+                        <% endif %>
+                    </td>
+                </tr>
+                <tr>
+                    <th><: Type :></th>
+                    <td><@ ShowModuleInfo["Type"] @></td>
                 </tr>
             </table>
-        </form>
-    </div>
-    <% endif %>
+            <br>
+            <p><a href="./?module=moduleadmin">Return to Module Admin</a></p>
+        </div>
+    <% else %>
+        <div class="zgrid_wrapper">
+            <@ AdminModules @>
+        </div>
+        <div class="zgrid_wrapper">
+        <h2> <: Configure Modules :> </h2>
+            <form action="./?module=moduleadmin&action=EditModule" method="post">
+                <table class="table table-striped">
+                    <@ ModuleTableHeader @>
+                    <@ ConfigModules @>
+                </table>
+                </br>
+                <button class="button-loader btn btn-primary" type="submit" id="button" name="inSave" value="inSave"> <: Save changes :> </button>
+            </form>          
+        </div>
 
+        <div class="zform_wrapper">
+            <h2><: Install a new module :></h2>
+            <p><: You can automatically install a new module by uploading your sentora package archive (.zpp file) and then click 'Install' to begin the process. :></p>
+            <form action="./?module=moduleadmin&action=InstallModule" method="post" enctype="multipart/form-data">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Module Archive:</th>
+                        <td> <input type="file" name="modulefile" id="modulefile" /></td>
+                        <td><button class="button-loader btn btn-primary" type="submit" name="submit"><: Install! :></button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    <% endif %>
 </div>

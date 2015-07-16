@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "WebMail",
+		"version"			: "100",
+		"category"			: "Mail",
+		"description"		: "Webmail is a convenient way for you to check your email accounts online without the need to configure an email client.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}

@@ -1,0 +1,12 @@
+{	
+	"module"	:	{
+		"name"				: "FTP Accounts",
+		"version"			: "100",
+		"category"			: "File Management",
+		"description"		: "Using this module you can create FTP accounts which will enable you and any other accounts you create to have the ability to upload and manage files on your hosting space.",
+		"authorname"		: "Sentora Project",
+		"authoremail"		: "info@sentora.org",
+		"authorurl"			: "http://sentora.org/",
+		"updateurl"			: "https://store.sentora.org/version.json"			
+	}
+}
