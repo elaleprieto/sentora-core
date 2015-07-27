@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 /**
- * @copyright 2014-2015 Sentora Project (http://www.sentora.org/) 
+ * @copyright 2014-2015 Sentora Project (http://www.sentora.org/)
  * Sentora is a GPL fork of the ZPanel Project whose original header follows:
  *
  * ZPPY - The ZPanel Package Manager Tool.
@@ -40,19 +40,59 @@ if ((isset($argv[1])) && ($argv[1] == 'install')) {
         exit(0);
     }
     fwrite(STDOUT, "Module to be installed " . $argv[2] . "\n");
-    $contents = file_get_contents($package_file);
-    $lines = preg_split('/\r\n|\r|\n/', $contents);
-    $newconf = "";
-    $isfound = false;
-    foreach ($lines as $line) {
-        $this_line = preg_split('/\t/', $line);
-        if ($this_line[0] == $argv[2]) {
-            $isfound = true;
-            if (fs_director::CheckFileExists('etc/zppy-cache/package-downloads/' . $argv[2] . '.zpp')) {
-                unlink('etc/zppy-cache/package-downloads/' . $argv[2] . '.zpp');
+    if(!isset($arg[3]) || $arg[3] != "-c" || $arg[3] != "--cache")
+    {
+        $contents = file_get_contents($package_file);
+        $lines = preg_split('/\r\n|\r|\n/', $contents);
+        $newconf = "";
+        $isfound = false;
+        foreach ($lines as $line) {
+            $this_line = preg_split('/\t/', $line);
+            if ($this_line[0] == $argv[2]) {
+                $isfound = true;
+                if (fs_director::CheckFileExists('etc/zppy-cache/package-downloads/' . $argv[2] . '.zpp')) {
+                    unlink('etc/zppy-cache/package-downloads/' . $argv[2] . '.zpp');
+                }
+                chdir('etc/zppy-cache/package-downloads/');
+                exec("wget -UZppyClient http://" . $this_line[1] . "/" . $argv[2] . ".zpp");
+                chdir($rootPath);
+                if ($isfound) {
+                    if (!fs_director::CheckFolderExists(ctrl_options::GetSystemOption('sentora_root') . 'modules/' . $argv[2])) {
+                        if (fs_director::CreateDirectory('modules/' . $argv[2])) {
+                            if (sys_archive::Unzip('etc/zppy-cache/package-downloads/' . $argv[2] . '.zpp', 'modules/' . $argv[2] . '')) {
+                                fs_director::SetFileSystemPermissions('modules/' . $argv[2] . '', 0777);
+                                if (!fs_director::CheckFileExists('modules/' . $argv[2] . '/module.xml')) {
+                                    fwrite(STDOUT, "No module.xml file found in the unzipped archive.\n");
+                                    exit(1);
+                                } else {
+                                    ui_module::ModuleInfoToDB($argv[2]);
+                                    $extra_config = ctrl_options::GetSystemOption('sentora_root') . "modules/" . $argv[2] . "/deploy/install.run";
+                                    if (fs_director::CheckFileExists($extra_config))
+                                        include($extra_config);
+                                    fwrite(STDOUT, "Module installed successfully!\n");
+                                    exit(0);
+                                }
+                            } else {
+                                fs_director::RemoveDirectory('modules/' . $argv[2]);
+                                fwrite(STDOUT, "An error occured, The package archive could not be extracted!\n");
+                                exit(1);
+                            }
+
+                            exit(1);
+                        } else {
+                            fwrite(STDOUT, "Cannot create directory for module!\n");
+                            exit(1);
+                        }
+                    } else {
+                        fwrite(STDOUT, "Module already appears to be installed!\n");
+                        exit(1);
+                    }
+                }
             }
-            chdir('etc/zppy-cache/package-downloads/');
-            exec("wget -UZppyClient http://" . $this_line[1] . "/" . $argv[2] . ".zpp");
+        }
+    }else if(isset($arg[3]) && $arg[3] == "-c" || $arg[3] == "--cache")){
+        $isfound = true;
+        if (fs_director::CheckFileExists('etc/zppy-cache/package-downloads/' . $argv[2] . '.zpp')) {
             chdir($rootPath);
             if ($isfound) {
                 if (!fs_director::CheckFolderExists(ctrl_options::GetSystemOption('sentora_root') . 'modules/' . $argv[2])) {
@@ -318,11 +358,11 @@ if ((isset($argv[1])) && ($argv[1] == 'update')) {
 
 if ((!isset($argv[1])) || ($argv[1] == 'help') || ($argv[1] == '-h') || ($argv[1] == '--help')) {
     fwrite(STDOUT, "\nSentora Package Manager\n");
-    fwrite(STDOUT, "Copyright (c) 2014 Sentora Project (http://sentora.org/)\n");    
+    fwrite(STDOUT, "Copyright (c) 2014 Sentora Project (http://sentora.org/)\n");
     fwrite(STDOUT, "Copyright (c) 2008 - 2014 ZPanel Project (http://www.zpanelcp.com/)\n\n");
     fwrite(STDOUT, "Usage: zppy [action] [modulename]\n\n");
     fwrite(STDOUT, "Actions:\n");
-    fwrite(STDOUT, "  install [modulename]- Install a named module.\n");
+    fwrite(STDOUT, "  install [modulename] (--cache) (-c) - Install a named module (Optional install from cache).\n");
     fwrite(STDOUT, "  upgrade [modulename]- Updates a named module.\n");
     fwrite(STDOUT, "  update - Updates local avaliable package list.\n");
     fwrite(STDOUT, "  remove [modulename] (-y) - Remove a named module. (Optional supress confirm)\n");
